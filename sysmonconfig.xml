@@ -1,0 +1,29 @@
+<Sysmon schemaversion="4.90">
+  <HashAlgorithms>*</HashAlgorithms>
+  <EventFiltering>
+
+    <!-- Event ID 1: Process Creation -->
+    <ProcessCreate onmatch="include">
+      <CommandLine condition="contains">powershell</CommandLine>
+    </ProcessCreate>
+
+    <!-- Event ID 2: File Create Time Change -->
+    <FileCreateTime onmatch="include">
+      <Image condition="begin with">C:\Users\</Image>
+    </FileCreateTime>
+
+    <!-- Event ID 3: Network Connection -->
+    <NetworkConnect onmatch="include">
+      <Image condition="end with">svchost.exe</Image>
+    </NetworkConnect>
+
+    <!-- ✅ Event ID 10: WMI Persistence Detection -->
+    <WmiEvent onmatch="include">
+      <Operation name="technique_id=T1047,technique_name=Windows Management Instrumentation"/>
+      <EventType name="WmiEventFilter">.*</EventType>
+      <EventType name="WmiEventConsumer">.*</EventType>
+      <EventType name="WmiEventConsumerToFilter">.*</EventType>
+    </WmiEvent>
+
+  </EventFiltering>
+</Sysmon>
