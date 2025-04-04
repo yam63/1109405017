@@ -17,3 +17,8 @@ Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding 
     Filter = $Filter.__PATH;
     Consumer = $Consumer.__PATH;
 }
+
+Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding -Arguments @{
+    Filter = [string]$Filter.__PATH;
+    Consumer = [string]$Consumer.__PATH;
+}
