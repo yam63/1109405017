@@ -1,0 +1,19 @@
+# 建立 Event Filter（當新程式被建立時觸發）
+$Filter = Set-WmiInstance -Namespace "root\subscription" -Class __EventFilter -Arguments @{
+    Name = "DetectNewProcess";
+    EventNamespace = "root\cimv2";
+    QueryLanguage = "WQL";
+    Query = "SELECT * FROM __InstanceCreationEvent WITHIN 5 WHERE TargetInstance ISA 'Win32_Process'"
+}
+
+# 建立 Event Consumer（要執行的程式，例如 notepad）
+$Consumer = Set-WmiInstance -Namespace "root\subscription" -Class CommandLineEventConsumer -Arguments @{
+    Name = "RunNotepad";
+    CommandLineTemplate = "notepad.exe";
+}
+
+# 將 Filter 綁定 Consumer（觸發對應執行）
+Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding -Arguments @{
+    Filter = $Filter.__PATH;
+    Consumer = $Consumer.__PATH;
+}
