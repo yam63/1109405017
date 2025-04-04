@@ -14,11 +14,6 @@ $Consumer = Set-WmiInstance -Namespace "root\subscription" -Class CommandLineEve
 
 # 將 Filter 綁定 Consumer（觸發對應執行）
 Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding -Arguments @{
-    Filter = $Filter.__PATH;
-    Consumer = $Consumer.__PATH;
-}
-
-Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding -Arguments @{
     Filter = [string]$Filter.__PATH;
     Consumer = [string]$Consumer.__PATH;
 }
