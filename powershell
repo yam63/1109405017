@@ -17,3 +17,8 @@ Set-WmiInstance -Namespace "root\subscription" -Class __FilterToConsumerBinding 
     Filter = [string]$Filter.__PATH;
     Consumer = [string]$Consumer.__PATH;
 }
+
+
+Get-WmiObject -Namespace root\subscription -Class __EventFilter | Remove-WmiObject -ErrorAction SilentlyContinue
+Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | Remove-WmiObject -ErrorAction SilentlyContinue
+Get-WmiObject -Namespace root\subscription -Class __FilterToConsumerBinding | Remove-WmiObject -ErrorAction SilentlyContinue
