@@ -23,19 +23,29 @@ Get-WmiObject -Namespace root\subscription -Class __EventFilter | Remove-WmiObje
 Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | Remove-WmiObject -ErrorAction SilentlyContinue
 Get-WmiObject -Namespace root\subscription -Class __FilterToConsumerBinding | Remove-WmiObject -ErrorAction SilentlyContinue
 
-# 建立 Event Filter（當系統執行新程式時觸發）
-$Filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
+# 建立 Event Filter
+$filterArgs = @{
     Name = "DetectNewProcess";
     EventNamespace = "root\cimv2";
     QueryLanguage = "WQL";
     Query = "SELECT * FROM __InstanceCreationEvent WITHIN 5 WHERE TargetInstance ISA 'Win32_Process'"
 }
+$Filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments $filterArgs
 
-# 建立 Consumer（觸發時執行 notepad.exe）
-$Consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
+# 建立 Consumer
+$consumerArgs = @{
     Name = "ExecuteNotepad";
     CommandLineTemplate = "notepad.exe";
 }
+$Consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments $consumerArgs
+
+# 綁定 Filter 與 Consumer（這是最容易出錯的地方，現在加上明確字串轉換）
+$bindArgs = @{
+    Filter = [string]$Filter.__RELPATH;
+    Consumer = [string]$Consumer.__RELPATH;
+}
+Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments $bindArgs
+
 
 # 綁定 Filter 與 Consumer（建立訂閱事件）
 Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
