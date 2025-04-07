@@ -74,3 +74,9 @@ Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -A
 Get-WmiObject -Namespace root\subscription -Class __EventFilter
 Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer
 Get-WmiObject -Namespace root\subscription -Class __FilterToConsumerBinding
+
+$bindArgs = @{
+    Filter = [string]$Filter.__RELPATH;
+    Consumer = [string]$SafeConsumer.__RELPATH;
+}
+Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments $bindArgs
