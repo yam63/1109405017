@@ -70,3 +70,7 @@ $bindArgs = @{
     Consumer = [string]$Consumer.__RELPATH;
 }
 Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments $bindArgs
+
+Get-WmiObject -Namespace root\subscription -Class __EventFilter
+Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer
+Get-WmiObject -Namespace root\subscription -Class __FilterToConsumerBinding
