@@ -52,3 +52,21 @@ Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -A
     Filter = [string]$Filter.__PATH;
     Consumer = [string]$Consumer.__PATH;
 }
+
+
+# 建立 Temp 資料夾
+New-Item -Path C:\Temp -ItemType Directory -Force
+
+# 重新建立 WMI Consumer（不使用 GUI）
+$consumerArgs = @{
+    Name = "ExecuteLog";
+    CommandLineTemplate = "cmd.exe /c echo Triggered >> C:\Temp\log.txt"
+}
+$Consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments $consumerArgs
+
+# 綁定至原本的 Filter
+$bindArgs = @{
+    Filter = [string]$Filter.__RELPATH;
+    Consumer = [string]$Consumer.__RELPATH;
+}
+Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments $bindArgs
